@@ -88,4 +88,9 @@ public class DefaultCompiler implements JavaCompiler {
     RunHelper h = new RunHelper();
     h.check(compiler.run(h.in(), h.out(), h.err(), args.toArray(new String[args.size()])));
   }
+
+  @Override
+  public void compile(String fileNameJava) throws JavaCompileError {
+    compile(new File(fileNameJava));
+  }
 }

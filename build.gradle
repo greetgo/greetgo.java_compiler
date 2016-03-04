@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-  ext.greetgoUtilVersion = '0.0.21'
+  ext.greetgoUtilVersion = '0.0.22'
   
   compile "kz.greetgo:greetgo.util:${greetgoUtilVersion}"
 

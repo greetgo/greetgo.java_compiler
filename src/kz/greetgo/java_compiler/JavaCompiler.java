@@ -5,5 +5,7 @@ import java.io.File;
 public interface JavaCompiler {
   void compile(File fileJava) throws JavaCompileError;
 
-  void multiCompile(File... files);
+  void compile(String fileNameJava) throws JavaCompileError;
+
+  void multiCompile(File... files) throws JavaCompileError;
 }
