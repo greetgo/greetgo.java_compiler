@@ -3,6 +3,8 @@ package kz.greetgo.java_compiler;
 import kz.greetgo.util.RND;
 import org.testng.annotations.Test;
 
+import javax.tools.JavaFileManager;
+import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.PrintWriter;
 
@@ -328,5 +330,9 @@ public class JavaCompilerTest {
 
   }
 
-
+  @Test
+  public void showEnv() throws Exception {
+    javax.tools.JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+    
+  }
 }
