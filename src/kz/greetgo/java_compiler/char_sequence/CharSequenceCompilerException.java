@@ -1,4 +1,4 @@
-package javaxtools.compiler;
+package kz.greetgo.java_compiler.char_sequence;
 
 import java.util.Collection;
 import java.util.Collections;

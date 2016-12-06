@@ -44,6 +44,10 @@ public class DefaultCompiler implements JavaCompiler {
 
   @Override
   public void compile(File fileJava) throws JavaCompileError {
+    
+    
+    
+    
     final Set<File> addedToClassPath = ServerUtil.getAddedToClassPath();
     if (addedToClassPath.isEmpty()) {
       RunHelper h = new RunHelper();

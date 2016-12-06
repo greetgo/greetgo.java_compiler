@@ -1,4 +1,4 @@
-package javaxtools.compiler;
+package kz.greetgo.java_compiler.char_sequence;
 
 import javax.tools.FileObject;
 import javax.tools.ForwardingJavaFileManager;

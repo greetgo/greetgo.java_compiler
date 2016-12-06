@@ -1,7 +1,7 @@
 package javaxtools.compiler.examples.plotter;
 
-import javaxtools.compiler.CharSequenceCompiler;
-import javaxtools.compiler.CharSequenceCompilerException;
+import kz.greetgo.java_compiler.char_sequence.CharSequenceCompiler;
+import kz.greetgo.java_compiler.char_sequence.CharSequenceCompilerException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -40,7 +40,7 @@ final public class PlotterPanel extends JPanel {
   private static final long serialVersionUID = 1L;
   private static final String DEFAULT_FUNCTION = "x * (sin(x) + cos(x))";
   private static final int PAD = 5;
-  private final CharSequenceCompiler<Function> compiler = new CharSequenceCompiler<>(
+  private final CharSequenceCompiler compiler = new CharSequenceCompiler(
     getClass().getClassLoader(), Arrays.asList("-target", "1.8"));
   private int classNameSuffix = 0;
   private static final String PACKAGE_NAME = "kz.pompei.compiler.examples.plotter.runtime";
@@ -148,9 +148,9 @@ final public class PlotterPanel extends JPanel {
       final String qName = packageName + '.' + className;
       final String source = fillTemplate(packageName, className, expr);
       final DiagnosticCollector<JavaFileObject> errs = new DiagnosticCollector<>();
-      Class<Function> compiledFunction = compiler.compile(qName, source, errs, Function.class);
+      Class<?> compiledFunction = compiler.compile(qName, source, errs, Function.class);
       log(errs);
-      return compiledFunction.newInstance();
+      return (Function) compiledFunction.newInstance();
     } catch (CharSequenceCompilerException e) {
       e.printStackTrace();
       log(e.getDiagnostics());

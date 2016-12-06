@@ -3,14 +3,13 @@ package kz.greetgo.java_compiler;
 import kz.greetgo.util.RND;
 import org.testng.annotations.Test;
 
-import javax.tools.JavaFileManager;
-import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.PrintWriter;
 
 import static kz.greetgo.util.ServerUtil.*;
 import static org.fest.assertions.api.Assertions.assertThat;
 
+@Test
 public class JavaCompilerTest {
 
   @Test
@@ -71,7 +70,7 @@ public class JavaCompilerTest {
     final String hello = (String) classA.getMethod("hello").invoke(classAInstance);
     assertThat(hello).isEqualTo("Hello from ClassA: Hello from ClassB");
 
-    deleteRecursively(srcDir);
+    //deleteRecursively(srcDir);
   }
 
   @Test
@@ -327,12 +326,14 @@ public class JavaCompilerTest {
     } finally {
       deleteRecursively(srcDir);
     }
-
   }
 
   @Test
-  public void showEnv() throws Exception {
-    javax.tools.JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-    
+  public void name() throws Exception {
+
+    ClassLoader classLoader = getClass().getClassLoader();
+
+    System.out.println(classLoader.getClass());
+
   }
 }
