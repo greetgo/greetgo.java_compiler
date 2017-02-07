@@ -100,11 +100,13 @@ public class CharSequenceCompiler {
   }
 
   /**
-   * Compile Java source in <var>javaSource</name> and return the resulting
+   * <p>Compile Java source in <var>javaSource</var> and return the resulting
    * class.
+   * </p>
    * <p>
    * Thread safety: this method is thread safe if the <var>javaSource</var>
    * and <var>diagnosticsList</var> are isolated to this thread.
+   * </p>
    *
    * @param qualifiedClassName The fully qualified class name.
    * @param javaSource         Complete java source, including a package statement and a class,
