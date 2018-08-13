@@ -59,6 +59,12 @@ public class DefaultCompiler implements JavaCompiler {
 
     cp.addAll(Arrays.asList(System.getProperty("java.class.path").split(File.pathSeparator)));
 
+
+    for (String path : cp) {
+      System.out.println("classpath " + path);
+    }
+
+
     RunHelper h = new RunHelper();
     h.check(compiler.run(h.in(), h.out(), h.err(),
       "-classpath", String.join(File.pathSeparator, cp),

@@ -24,9 +24,12 @@ public class JavaCompilerTest {
 
     try (final PrintWriter writer = new PrintWriter(classAFile, "UTF-8")) {
       writer.println("package kz.greetgo.java_compiler.gen;");
+      writer.println("import org.testng.annotations.Test;");
+      writer.println("import kz.greetgo.depinject.core.Bean;");
       writer.println();
       writer.println("public class ClassA_87162 {");
       writer.println("  public ClassB_87162 classB;");
+      writer.println("  @Test");
       writer.println("  public String hello() {");
       writer.println("    return \"Hello from ClassA: \" + classB.hello();");
       writer.println("  }");
@@ -35,7 +38,10 @@ public class JavaCompilerTest {
 
     try (final PrintWriter writer = new PrintWriter(classBFile, "UTF-8")) {
       writer.println("package kz.greetgo.java_compiler.gen;");
+      writer.println("import org.testng.annotations.Test;");
+      writer.println("import kz.greetgo.depinject.core.Bean;");
       writer.println();
+      writer.println("@Bean");
       writer.println("public class ClassB_87162 {");
       writer.println("  public String hello() {");
       writer.println("    return \"Hello from ClassB\";");

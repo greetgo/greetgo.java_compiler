@@ -43,11 +43,14 @@ dependencies {
 
   compile "kz.greetgo:greetgo.util:$greetgoUtilVersion"
 
+  testCompile "kz.greetgo.depinject:greetgo.depinject:2.0.3"
+
   testCompile 'org.testng:testng:6.5.1'
   testCompile 'org.easytesting:fest-assert-core:2.0M10'
   testCompile group: 'org.jfree', name: 'jfreechart', version: '1.0.19'
 
 }
+
 tasks.withType(Javadoc) {
   options.addStringOption('Xdoclint:none', '-quiet')
   options.addStringOption('encoding', 'UTF-8')
