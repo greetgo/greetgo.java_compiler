@@ -1,4 +1,3 @@
-
 buildscript {
   repositories {
     mavenLocal()
@@ -25,7 +24,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven'
 
-version = '2.0.1'
+version = '2.0.2'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -95,13 +94,13 @@ jar {
 
 uploadToMavenCentral {
   description = 'greetgo compiler simple interface'
-  url         = 'https://github.com/greetgo/greetgo.java_compiler'
+  url = 'https://github.com/greetgo/greetgo.java_compiler'
   scm {
     url = 'https://github.com/greetgo/greetgo.java_compiler.git'
   }
   developer {
-    id    = 'pompei'
-    name  = 'Evgenij Kolpakov'
+    id = 'pompei'
+    name = 'Evgenij Kolpakov'
     email = 'ekolpakov@greet-go.com'
   }
 }
