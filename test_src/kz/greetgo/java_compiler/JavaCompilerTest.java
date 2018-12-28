@@ -14,7 +14,7 @@ public class JavaCompilerTest {
 
   @Test
   public void compile_oneDirection() throws Exception {
-    String srcDir = "build/src/DefaultCompilerTest_compile_oneDirection_" + RND.intStr(5);
+    String srcDir = "build/src/DefaultCompilerTest_compile_oneDirection_" + RND.strInt(5);
 
     final File classAFile = new File(srcDir + "/kz/greetgo/java_compiler/gen/ClassA_87162.java");
     final File classBFile = new File(srcDir + "/kz/greetgo/java_compiler/gen/ClassB_87162.java");
@@ -82,7 +82,7 @@ public class JavaCompilerTest {
   @Test
   public void multiCompile_eachOtherDirected() throws Exception {
 
-    String srcDir = "build/src/DefaultCompilerTest_multiCompile_eachOtherDirected_" + RND.intStr(5);
+    String srcDir = "build/src/DefaultCompilerTest_multiCompile_eachOtherDirected_" + RND.strInt(5);
 
     final File classAFile = new File(srcDir + "/kz/greetgo/java_compiler/gen/ClassA_1756.java");
     final File classBFile = new File(srcDir + "/kz/greetgo/java_compiler/gen/ClassB_1756.java");
@@ -144,7 +144,7 @@ public class JavaCompilerTest {
   @Test
   public void multiCompile_twoSources() throws Exception {
 
-    final String rnd = RND.intStr(5);
+    final String rnd = RND.strInt(5);
     String srcDir1 = "build/src/DefaultCompilerTest_multiCompile_twoSources_" + rnd + "_1";
     String srcDir2 = "build/src/DefaultCompilerTest_multiCompile_twoSources_" + rnd + "_2";
 
@@ -210,7 +210,7 @@ public class JavaCompilerTest {
   @Test
   public void multiCompile_threeSources() throws Exception {
 
-    final String rnd = RND.intStr(5);
+    final String rnd = RND.strInt(5);
     String srcDir1 = "build/src/DefaultCompilerTest_multiCompile_twoSources_" + rnd + "_1";
     String srcDir2 = "build/src/DefaultCompilerTest_multiCompile_twoSources_" + rnd + "_2";
     String srcDir3 = "build/src/DefaultCompilerTest_multiCompile_twoSources_" + rnd + "_3";
@@ -304,7 +304,7 @@ public class JavaCompilerTest {
   @Test(expectedExceptions = JavaCompileError.class)
   public void compile_error() throws Exception {
 
-    final String rnd = RND.intStr(5);
+    final String rnd = RND.strInt(5);
     String srcDir = "build/src/DefaultCompilerTest_compile_error_" + rnd;
 
     final File classAFile = new File(srcDir + "/kz/greetgo/java_compiler/gen/ClassA_172654.java");
