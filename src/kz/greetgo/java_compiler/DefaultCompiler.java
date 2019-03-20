@@ -1,7 +1,5 @@
 package kz.greetgo.java_compiler;
 
-import kz.greetgo.util.ServerUtil;
-
 import javax.tools.ToolProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -11,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DefaultCompiler implements JavaCompiler {
 
@@ -47,21 +45,34 @@ public class DefaultCompiler implements JavaCompiler {
     }
   }
 
+  private final List<File> classpath = new ArrayList<>();
+
+  {
+    String javaClassPath = System.getProperty("java.class.path");
+    if (javaClassPath != null) {
+      Arrays.stream(javaClassPath
+        .split(File.pathSeparator))
+        .map(File::new)
+        .filter(File::exists)
+        .forEachOrdered(classpath::add);
+    }
+  }
+
+  @Override
+  public List<File> classpath() {
+    return classpath;
+  }
+
+  private String classpathStr() {
+    return classpath().stream().map(File::getPath).collect(Collectors.joining(File.pathSeparator));
+  }
+
+
   @Override
   public void compile(File fileJava) throws JavaCompileError {
-
-    final Set<File> addedToClassPath = ServerUtil.getAddedToClassPath();
-
-    List<String> cp = new ArrayList<>();
-    for (File file : addedToClassPath) {
-      cp.add(file.getPath());
-    }
-
-    cp.addAll(Arrays.asList(System.getProperty("java.class.path").split(File.pathSeparator)));
-
     RunHelper h = new RunHelper();
     h.check(compiler.run(h.in(), h.out(), h.err(),
-      "-classpath", String.join(File.pathSeparator, cp),
+      "-classpath", classpathStr(),
       fileJava.getPath()));
   }
 
@@ -75,20 +86,9 @@ public class DefaultCompiler implements JavaCompiler {
 
     List<String> args = new ArrayList<>();
 
-    final Set<File> addedToClassPath = ServerUtil.getAddedToClassPath();
     {
-      StringBuilder cp = new StringBuilder();
-      for (File file : addedToClassPath) {
-        cp.append(file.getPath()).append(File.pathSeparatorChar);
-      }
-      cp.append(System.getProperty("java.class.path"));
-
-      String cpStr = cp.toString();
-      if (cpStr.startsWith(File.pathSeparator)) {
-        cpStr = cpStr.substring(1);
-      }
       args.add("-classpath");
-      args.add(cpStr);
+      args.add(classpathStr());
     }
 
     for (File file : files) {

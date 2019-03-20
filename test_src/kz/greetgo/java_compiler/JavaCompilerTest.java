@@ -5,8 +5,11 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import static kz.greetgo.util.ServerUtil.*;
+import static kz.greetgo.util.ServerUtil.deleteRecursively;
+import static kz.greetgo.util.ServerUtil.dummyCheck;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 @Test
@@ -14,7 +17,9 @@ public class JavaCompilerTest {
 
   @Test
   public void compile_oneDirection() throws Exception {
-    String srcDir = "build/src/DefaultCompilerTest_compile_oneDirection_" + RND.strInt(5);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    String dat = sdf.format(new Date());
+    String srcDir = "build/DefaultCompilerTest_compile_oneDirection/" + dat + "-" + RND.strInt(5);
 
     final File classAFile = new File(srcDir + "/kz/greetgo/java_compiler/gen/ClassA_87162.java");
     final File classBFile = new File(srcDir + "/kz/greetgo/java_compiler/gen/ClassB_87162.java");
@@ -57,7 +62,7 @@ public class JavaCompilerTest {
     //
     //
 
-    addToClasspath(srcDir);
+    compiler.classpath().add(new File(srcDir));
 
     //
     //
@@ -65,10 +70,13 @@ public class JavaCompilerTest {
     //
     //
 
-    final Class<?> classA = Class.forName("kz.greetgo.java_compiler.gen.ClassA_87162");
+    FilesClassLoader classLoader = new FilesClassLoader(getClass().getClassLoader());
+    classLoader.addFile(new File(srcDir));
+
+    final Class<?> classA = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassA_87162");
     final Object classAInstance = classA.newInstance();
 
-    final Class<?> classB = Class.forName("kz.greetgo.java_compiler.gen.ClassB_87162");
+    final Class<?> classB = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassB_87162");
     final Object classBInstance = classB.newInstance();
 
     classA.getField("classB").set(classAInstance, classBInstance);
@@ -123,12 +131,15 @@ public class JavaCompilerTest {
     //
     //
 
-    addToClasspath(srcDir);
+    compiler.classpath().add(new File(srcDir));
 
-    final Class<?> classA = Class.forName("kz.greetgo.java_compiler.gen.ClassA_1756");
+    FilesClassLoader classLoader = new FilesClassLoader(getClass().getClassLoader());
+    classLoader.addFile(new File(srcDir));
+
+    final Class<?> classA = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassA_1756");
     final Object classAInstance = classA.newInstance();
 
-    final Class<?> classB = Class.forName("kz.greetgo.java_compiler.gen.ClassB_1756");
+    final Class<?> classB = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassB_1756");
     final Object classBInstance = classB.newInstance();
     final Object classBSecondInstance = classB.newInstance();
 
@@ -179,10 +190,10 @@ public class JavaCompilerTest {
       writer.println("}");
     }
 
-    addToClasspath(srcDir1);
-    addToClasspath(srcDir2);
-
     final JavaCompiler compiler = new DefaultCompiler();
+
+    compiler.classpath().add(new File(srcDir1));
+    compiler.classpath().add(new File(srcDir2));
 
     //
     //
@@ -190,10 +201,14 @@ public class JavaCompilerTest {
     //
     //
 
-    final Class<?> classA = Class.forName("kz.greetgo.java_compiler.gen.ClassA_28639");
+    FilesClassLoader classLoader = new FilesClassLoader(getClass().getClassLoader());
+    classLoader.addFile(new File(srcDir1));
+    classLoader.addFile(new File(srcDir2));
+
+    final Class<?> classA = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassA_28639");
     final Object classAInstance = classA.newInstance();
 
-    final Class<?> classB = Class.forName("kz.greetgo.java_compiler.gen.ClassB_28639");
+    final Class<?> classB = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassB_28639");
     final Object classBInstance = classB.newInstance();
     final Object classBSecondInstance = classB.newInstance();
 
@@ -267,9 +282,9 @@ public class JavaCompilerTest {
     //
     //
 
-    addToClasspath(srcDir1);
-    addToClasspath(srcDir2);
-    addToClasspath(srcDir3);
+    compiler.classpath().add(new File(srcDir1));
+    compiler.classpath().add(new File(srcDir2));
+    compiler.classpath().add(new File(srcDir3));
 
     //
     //
@@ -277,14 +292,19 @@ public class JavaCompilerTest {
     //
     //
 
-    final Class<?> classA = Class.forName("kz.greetgo.java_compiler.gen.ClassA_918267");
+    FilesClassLoader classLoader = new FilesClassLoader(getClass().getClassLoader());
+    classLoader.addFile(new File(srcDir1));
+    classLoader.addFile(new File(srcDir2));
+    classLoader.addFile(new File(srcDir3));
+
+    final Class<?> classA = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassA_918267");
     final Object classAInstance = classA.newInstance();
 
-    final Class<?> classB = Class.forName("kz.greetgo.java_compiler.gen.ClassB_918267");
+    final Class<?> classB = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassB_918267");
     final Object classBInstance = classB.newInstance();
     final Object classBSecondInstance = classB.newInstance();
 
-    final Class<?> classC = Class.forName("kz.greetgo.java_compiler.gen.ClassC_918267");
+    final Class<?> classC = classLoader.loadClass("kz.greetgo.java_compiler.gen.ClassC_918267");
     final Object classCInstance = classC.newInstance();
 
     classA.getField("classB").set(classAInstance, classBInstance);
@@ -335,7 +355,7 @@ public class JavaCompilerTest {
   }
 
   @Test
-  public void name() throws Exception {
+  public void name() {
 
     ClassLoader classLoader = getClass().getClassLoader();
 
